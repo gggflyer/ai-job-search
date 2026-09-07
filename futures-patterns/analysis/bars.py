@@ -97,6 +97,15 @@ def shift_close_to_open(bars: list[Bar], minutes: int) -> list[Bar]:
     return [Bar(b.ts - d, b.open, b.high, b.low, b.close, b.volume) for b in bars]
 
 
+def convert_tz(bars: list[Bar], from_tz: str, to_tz: str) -> list[Bar]:
+    """Re-stamp naive timestamps from one IANA zone to another (e.g. UTC ->
+    America/New_York). Needs the `tzdata` package on Windows."""
+    from zoneinfo import ZoneInfo
+    src, dst = ZoneInfo(from_tz), ZoneInfo(to_tz)
+    return [Bar(b.ts.replace(tzinfo=src).astimezone(dst).replace(tzinfo=None),
+                b.open, b.high, b.low, b.close, b.volume) for b in bars]
+
+
 def bucket_start(ts: datetime, minutes: int) -> datetime:
     floored_min = (ts.minute // minutes) * minutes
     return ts.replace(minute=floored_min, second=0, microsecond=0)

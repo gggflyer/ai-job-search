@@ -22,9 +22,12 @@ Micro S&P (ES, MES), Nasdaq (NQ), Gold (GC), Crude (CL), Bitcoin futures
 | `docs/BAR_TAXONOMY.md` | Precise, tick-aware definitions of every bar relationship we test |
 | `docs/RESEARCH_PLAN.md` | Hypotheses, method, what counts as a "real" edge, phases |
 | `docs/DATA_SOURCES.md` | Where to get historical and live futures data, with trade-offs |
+| `docs/EXPORT_GUIDE.md` | Step-by-step: export ES 1-minute history from NinjaTrader 8 (Rithmic) and TradeStation |
+| `docs/FINDINGS.md` | Results log, starting with the random-walk null baseline |
+| `platforms/` | Platform-side code: TradeStation export indicator now, NinjaScript markers later |
 | `docs/DECISIONS.md` | Running log of decisions made, so nothing is re-argued |
 | `analysis/` | Pure-Python library: CSV loading, bar classification, conditional tables, intrabar path stats |
-| `scripts/` | Command-line entry points that run the analysis on a CSV |
+| `scripts/` | Command-line entry points: synthetic data, contract merge, pattern tables, intrabar path, `run_es.sh` |
 | `data/` | Local market data (git-ignored). `data/README.md` describes the CSV format |
 | `results/` | Generated tables (git-ignored) |
 | `tests/` | Unit tests for the classifier and the outcome logic |
@@ -52,13 +55,22 @@ python3 scripts/run_intrabar.py data/synthetic_1m.csv --minutes 5 --tick 0.25
 python3 -m unittest discover -s tests -v
 ```
 
-Point the same scripts at a real 1-minute export from NinjaTrader, TradeStation,
-or any vendor once the CSV format in `data/README.md` is matched.
+## Real data: ES from NinjaTrader 8 + Rithmic
+
+Follow `docs/EXPORT_GUIDE.md`. In short:
+
+```bash
+# merge per-contract NinjaTrader exports into one Eastern-time, open-stamped series
+python3 scripts/merge_contracts.py "data/nt/ES 12-25.Last.txt" "data/nt/ES 03-26.Last.txt" \
+    --ts-is-close --tz-from UTC --drop-roll-days --out data/ES_1m.csv
+# full ES regular-hours battery, saved under results/
+bash scripts/run_es.sh data/ES_1m.csv
+```
 
 ## Phases
 
 1. **Definitions and tooling** (this commit): taxonomy, null model, analysis CLI.
-2. **Data**: pick a source, pull 1-minute history for the priority instruments.
+2. **Data**: export ES 1-minute history from NinjaTrader 8 (Rithmic), cross-check with TradeStation. Tooling for this is in place; the export itself runs on the owner's Windows machine.
 3. **Measurement**: run the tables per instrument, per session, per time-of-day.
    Keep candidates that beat the null with adequate sample size in-sample AND
    out-of-sample.

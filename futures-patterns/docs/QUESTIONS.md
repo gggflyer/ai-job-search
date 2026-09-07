@@ -1,10 +1,12 @@
 # Open questions for the owner
 
+**Answered 2026-09-07:** Q1 (ES first), Q4 (regular hours), Q15 (NinjaTrader 8 + Rithmic, and TradeStation), Q22 (NinjaTrader is the daily platform; TradeStation also available). Recorded in `DECISIONS.md`. Remaining open questions are the ones without a strike-through.
+
 Answer these in any order. Each one changes what gets built next. Defaults in
 *italics* are what Claude will assume if there is no answer.
 
 ## A. Instruments and timeframes
-1. **Priority order of instruments.** Which one first? *Default: ES (or MES),
+1. ~~**Priority order of instruments.**~~ ANSWERED: ES first. Which one first? *Default: ES (or MES),
    then GC, CL, NQ, BTC, KC.* Each instrument gets its own tables; behaviour
    differs a lot between the index and the physicals.
 2. **Full-size or micro?** Same price series, different tick value and
@@ -13,7 +15,7 @@ Answer these in any order. Each one changes what gets built next. Defaults in
 3. **Primary timeframe.** 5-minute for setups with 1-minute underneath for
    intrabar path analysis? Or also 1-minute setups? *Default: 5-min setups,
    1-min for path.*
-4. **Session.** Regular trading hours only (e.g. ES 09:30-16:00 ET), or the full
+4. ~~**Session.**~~ ANSWERED: regular hours, 09:30-16:15 ET. Regular trading hours only (e.g. ES 09:30-16:00 ET), or the full
    Globex session? Overnight bars behave differently and will pollute daytime
    statistics if mixed. *Default: RTH only, with a separate overnight table.*
 5. **Timezone of your platform exports.** NinjaTrader exports in the PC's local
@@ -52,7 +54,7 @@ Answer these in any order. Each one changes what gets built next. Defaults in
     `analysis/instruments.py` which you should correct.*
 
 ## D. Data
-15. **Which platforms/brokers do you already have accounts with?** NinjaTrader
+15. ~~**Which platforms/brokers do you already have accounts with?**~~ ANSWERED: NinjaTrader 8 with Rithmic, plus TradeStation. See `EXPORT_GUIDE.md`. NinjaTrader
     (with which data feed: Kinetick, Rithmic, CQG, Tradovate?), TradeStation,
     Interactive Brokers, something else? Every one of these can export
     historical 1-minute bars for free, which is the cheapest phase-2 source.
@@ -75,7 +77,7 @@ Answer these in any order. Each one changes what gets built next. Defaults in
 21. **GitHub repo.** This folder currently lives inside the `ai-job-search`
     repo on a feature branch. Should Claude create a new dedicated repo (name?)
     under your account and move it there?
-22. **Target platform for chart markers.** NinjaTrader 8 (C# NinjaScript) or
+22. ~~**Target platform for chart markers.**~~ ANSWERED: NinjaTrader 8 (NinjaScript). TradeStation version optional later. NinjaTrader 8 (C# NinjaScript) or
     TradeStation (EasyLanguage)? Which one do you actually chart on daily?
 
 ## F. What counts as success

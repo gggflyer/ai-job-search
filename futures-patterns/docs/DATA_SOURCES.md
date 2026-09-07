@@ -30,8 +30,10 @@ buying.
 
 ## Recommendation
 
-1. **Phase 2 first source:** whichever of TradeStation or NinjaTrader you already
-   run. Export 1-minute ES (or MES) for as far back as it goes. Zero cost.
+1. **Phase 2 first source (decided):** NinjaTrader 8 with the Rithmic feed,
+   which serves minute bars back to 2006. Export per contract and merge with
+   `scripts/merge_contracts.py`. TradeStation's `@ES` continuous export is the
+   cross-check. Steps in `EXPORT_GUIDE.md`. Zero cost.
 2. If depth or cleanliness is a problem, **Databento GLBX.MDP3** for CME
    products and **IFUS.IMPACT** for coffee. Ask for the quote before pulling.
 3. Live feeds are the platform's job (NinjaTrader or TradeStation connect to

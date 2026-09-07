@@ -1,0 +1,40 @@
+{ ExportBars - TradeStation EasyLanguage indicator
+  Writes every bar of the chart it is applied to into a CSV that the
+  futures-patterns scripts read directly.
+
+  Setup:
+    1. Chart: @ES (continuous) or a specific contract, 1 minute, session
+       "Regular" or "Exchange" as required. Format Symbol > Settings > Range:
+       set as many years back as TradeStation will load (10+ for futures).
+    2. Create a new Indicator in the EasyLanguage editor, paste this, verify.
+    3. Insert on the chart. The file is (re)written from bar 1 onwards.
+       FileAppend is slow (opens the file per line); a year of 1-minute bars
+       can take a few minutes. Wait until the last bar is written.
+    4. Analyse with:
+         python3 scripts/run_patterns.py data/ES_1m_ts.csv --symbol ES --session 09:30-16:15 --ts-is-close
+       TradeStation stamps bars with their CLOSE time in exchange (ET) time,
+       hence --ts-is-close and no timezone flag.
+  Notes:
+    - Volume on intraday futures charts is the trade volume when the chart is
+      set to "Trade Vol"; if it shows tick counts, switch the chart setting.
+    - NumToStr with 4 decimals covers ES/NQ (0.25), GC (0.10), CL (0.01).
+}
+
+inputs:
+    FileName( "C:\data\ES_1m_ts.csv" );
+
+variables:
+    Line( "" );
+
+once begin
+    FileDelete( FileName );
+    FileAppend( FileName, "timestamp,open,high,low,close,volume" + NewLine );
+end;
+
+Line = FormatDate( "yyyy-MM-dd", ELDateToDateTime( Date ) ) + " "
+     + FormatTime( "HH:mm:ss", ELTimeToDateTime( Time ) ) + ","
+     + NumToStr( Open, 4 ) + "," + NumToStr( High, 4 ) + ","
+     + NumToStr( Low, 4 ) + "," + NumToStr( Close, 4 ) + ","
+     + NumToStr( Volume, 0 );
+
+FileAppend( FileName, Line + NewLine );

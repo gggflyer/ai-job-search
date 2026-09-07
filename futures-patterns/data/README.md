@@ -24,5 +24,8 @@ unadjusted, roll days dropped.
 
 ## Timezone
 
-Record the timezone of each file in `docs/DECISIONS.md`. Session filters in the
-scripts use the file's own clock.
+Internal standard is **America/New_York, bar open time**. NinjaTrader exports are
+UTC and close-stamped: convert with `--ts-is-close --tz-from UTC` (the merge
+script and the analysis scripts both accept these). TradeStation exports are
+exchange time, close-stamped: `--ts-is-close` only. On Windows, `pip install
+tzdata` if Python cannot find the zone.

@@ -104,3 +104,16 @@ class Resample(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Conversions(unittest.TestCase):
+    def test_utc_to_eastern_and_close_shift(self):
+        from analysis.bars import convert_tz, shift_close_to_open
+        # NinjaTrader style: close-stamped UTC. January is EST (UTC-5): 14:31 UTC -> 09:30 ET open time
+        b = [Bar(datetime(2026, 1, 5, 14, 31), 1, 2, 0, 1, 1)]
+        out = convert_tz(shift_close_to_open(b, 1), "UTC", "America/New_York")
+        self.assertEqual(out[0].ts, datetime(2026, 1, 5, 9, 30))
+        # July is EDT (UTC-4): 13:31 UTC -> 09:30 ET
+        b = [Bar(datetime(2026, 7, 6, 13, 31), 1, 2, 0, 1, 1)]
+        out = convert_tz(shift_close_to_open(b, 1), "UTC", "America/New_York")
+        self.assertEqual(out[0].ts, datetime(2026, 7, 6, 9, 30))

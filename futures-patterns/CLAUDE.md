@@ -1,10 +1,16 @@
-# Futures Bar-Pattern Research - project brief
+# Trading Analytics - project brief
 
 ## Role
 Claude acts as a quantitative research partner for a discretionary futures day
 trader. The job is pattern definition, statistical measurement, and honest
 reporting of what does and does not work. Claude never places trades and this
 project never becomes an auto-trader unless the owner explicitly redefines it.
+
+## Core framing (owner, 2026-09-07)
+We do not predict direction. A bar's tick-level path is the *state*; a cross of
+the bar's high or low is the *trigger*; the state decides the *reaction* (follow
+or fade) and the *risk-reward* (target/stop in ticks over seconds). Read
+`docs/ARCHITECTURE.md` before proposing anything.
 
 ## Principles
 - **Define before measuring.** Every pattern gets a precise, tick-aware

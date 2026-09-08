@@ -1,4 +1,4 @@
-# Futures Bar-Pattern Research
+# Trading Analytics
 
 Research workspace for discretionary futures day trading. The goal is to find
 **bar-to-bar relationships on intraday candlesticks (1-minute and 5-minute
@@ -22,6 +22,7 @@ Micro S&P (ES, MES), Nasdaq (NQ), Gold (GC), Crude (CL), Bitcoin futures
 | `docs/BAR_TAXONOMY.md` | Precise, tick-aware definitions of every bar relationship we test |
 | `docs/RESEARCH_PLAN.md` | Hypotheses, method, what counts as a "real" edge, phases |
 | `docs/DATA_SOURCES.md` | Where to get historical and live futures data, with trade-offs |
+| `docs/ARCHITECTURE.md` | The intrabar tick-path design: states, triggers, reactions, outcomes, costs. Discussion draft |
 | `docs/EXPORT_GUIDE.md` | Step-by-step: export ES 1-minute history from NinjaTrader 8 (Rithmic) and TradeStation |
 | `docs/FINDINGS.md` | Results log, starting with the random-walk null baseline |
 | `platforms/` | Platform-side code: TradeStation export indicator now, NinjaScript markers later |

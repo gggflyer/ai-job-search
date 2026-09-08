@@ -1,5 +1,10 @@
 # Research plan
 
+> 2026-09-07: the framing moved from 'next-bar direction' to 'state-conditional
+> outcome distribution after a high/low cross, at tick resolution'. See
+> `ARCHITECTURE.md`. The hypotheses below stay as the 1-minute baseline; the
+> tick-level hypotheses will be added once the architecture is agreed.
+
 ## Hypotheses (initial set, to be extended by the owner)
 
 | ID | Hypothesis | Falsified if |

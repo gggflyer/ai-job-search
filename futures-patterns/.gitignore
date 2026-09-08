@@ -1,9 +1,0 @@
-# Market data is never committed - it is large and usually licensed.
-data/*
-!data/README.md
-!data/samples/
-results/*
-!results/.gitkeep
-__pycache__/
-*.pyc
-.venv/
